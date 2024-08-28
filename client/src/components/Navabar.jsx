@@ -6,23 +6,25 @@ import { RiCloseCircleFill, RiSearchLine } from "@remixicon/react";
 import MenuDrewer from "./MenuDrawer";
 import { Link } from "react-router-dom";
 import DrawerMenu from "../components/DrawerMenu";
-import Smart from "../assets/Smart_basket-250124-1.png"
-import Offers from "../assets/offers.png"
-
+import Smart from "../assets/Smart_basket-250124-1.png";
+import Offers from "../assets/offers.png";
 
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
-import LoginSignUp from "./LoginSignUp";
+import SignUp from "./SignUp";
 
-
+import { useAuth } from "../store/Auth";
+import Profile from "./Profile";
 const Navabar = () => {
+
+  const { isLoggedIn } = useAuth();
+
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
       right: 2,
       top: 15,
       border: `1px solid ${theme.palette.background.paper}`,
-      
     },
   }));
   return (
@@ -49,15 +51,17 @@ const Navabar = () => {
               <img src={Location} alt="location" />
               <p className="text-black text-xs text-center">Select Location</p>
             </button>
+            {isLoggedIn ? <Profile /> : <SignUp />}
 
-            <LoginSignUp />
-            <div className="bg-red-100">
-              <IconButton aria-label="cart">
-                <StyledBadge badgeContent={2} color="secondary">
-                  <img src={Cart} width={18} alt="cart" />
-                </StyledBadge>
-              </IconButton>
-            </div>
+            <Link to={"/user-product-cart"}>
+              <div className="bg-red-100">
+                <IconButton aria-label="cart">
+                  <StyledBadge badgeContent={2} color="secondary">
+                    <img src={Cart} width={18} alt="cart" />
+                  </StyledBadge>
+                </IconButton>
+              </div>
+            </Link>
           </div>
         </div>
         <div className="h-12 flex w-full items-center px-12 ">
