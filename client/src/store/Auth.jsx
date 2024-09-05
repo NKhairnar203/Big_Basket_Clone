@@ -1,9 +1,27 @@
-import { createContext, useContext, useState } from "react";
-
+import { createContext, useEffect, useContext, useState } from "react";
+import axios from "axios";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
+
+  const [data, setData] = useState([]);
+
+
+
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const response = await axios({
+  //         method: "GET",
+  //         url: "http://localhost:3000/api/product/all-products",
+  //       });
+  //       setData(response.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   })();
+  // }, []);
 
   const storeTokenLS = (serverToken) => {
     setToken(serverToken);
@@ -19,7 +37,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ storeTokenLS, isLoggedIn, LogoutUser }}>
+    <AuthContext.Provider
+      value={{ storeTokenLS, isLoggedIn, LogoutUser}}
+    >
       {children}
     </AuthContext.Provider>
   );

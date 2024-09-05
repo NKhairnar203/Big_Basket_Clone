@@ -1,5 +1,4 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import React, { useRef } from "react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/free-mode";
@@ -10,12 +9,37 @@ import { FreeMode, Pagination, Navigation } from "swiper/modules";
 import ProductBox from "./ProductBox";
 import { Link } from "react-router-dom";
 import { RiArrowLeftWideLine, RiArrowRightWideLine } from "@remixicon/react";
+import { useEffect, useRef, useState } from "react";
+import { useAuth } from "../store/Auth";
+import axios from "axios";
 
-export default function Basket({name}) {
+export default function Basket({ name }) {
   const swiperRef = useRef(null);
+  // const { data } = useAuth();
+
+  // const [products, setProducts] = useState([]);
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(null);
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios({
+          method: "GET",
+          url: "http://localhost:3000/api/product/all-products",
+        });
+        setData(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
   return (
-    <div className="my-5 bg-slate-200 px-7 py-5 overflow-hidden">
-      <div className="ml-4 mb-3 flex justify-between items-center">
+    <div className="my-5 bg-slate-200 px-7 py-5 overflow-hidden rounded-md">
+      <div className="ml-4 mb-3 flex justify-between items-center ">
         <h1 className="font-bold text-xl">{name}</h1>
         <div className="flex items-center gap-3">
           <Link className="underline" to={"#"}>
@@ -35,7 +59,7 @@ export default function Basket({name}) {
           </button>
         </div>
       </div>
-      <div>
+      <div className="h-full rounded-md">
         <Swiper
           slidesPerView={4}
           spaceBetween={25}
@@ -50,46 +74,13 @@ export default function Basket({name}) {
           modules={[FreeMode, Pagination, Navigation]}
           className="mySwiper bg-slate-200 px-5 pb-10 overflow-hidden rounded"
         >
-          <SwiperSlide className=" w-full ">
-            <div className="w-58 border shadow-md p-2.5  rounded-md ">
-              <ProductBox />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="w-58 border shadow-md p-2.5  rounded-md ">
-              <ProductBox />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="w-58 border shadow-md p-2.5  rounded-md ">
-              <ProductBox />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="w-58 border shadow-md p-2.5  rounded-md ">
-              <ProductBox />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="w-58 border shadow-md p-2.5  rounded-md ">
-              <ProductBox />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="w-58 border shadow-md p-2.5  rounded-md ">
-              <ProductBox />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="w-58 border shadow-md p-2.5  rounded-md ">
-              <ProductBox />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="w-58 border shadow-md p-2.5  rounded-md ">
-              <ProductBox />
-            </div>
-          </SwiperSlide>
+          {data.map((item, index) => (
+            <SwiperSlide key={index}>
+              <div className="w-58 h-full border shadow-md p-2.5  rounded-md ">
+                <ProductBox {...item} />
+              </div>
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
     </div>

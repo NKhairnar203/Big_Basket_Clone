@@ -1,4 +1,3 @@
-import React from "react";
 import DefaultSwaper from "../components/DefaultSwaper";
 import { Link } from "react-router-dom";
 import topstrip1 from "../assets/hp_topstrip_m_250923_01.png";
@@ -119,7 +118,6 @@ const Home = () => {
           bigbasket.com the go-to destination for all your immediate grocery
           needs.
         </p>
-       
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
-const FourCard = ({name}) => {
+import React from "react";
+import { Link } from "react-router-dom";
+const FourCard = ({ name }) => {
   return (
     <div className="my-5">
       <div>
@@ -16,6 +16,7 @@ const FourCard = ({name}) => {
             />
           </Link>
         </div>
+
         <div className="shadow-md rounded-md  hover:shadow-2xl">
           <Link to={"#"}>
             <img
@@ -46,6 +47,6 @@ const FourCard = ({name}) => {
       </div>
     </div>
   );
-}
+};
 
 export default FourCard;
